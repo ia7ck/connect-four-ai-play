@@ -20,7 +20,7 @@ jobs:
       - name: Build
         run: |
           rm -rf web/src/pkg/
-          wasm-pack build wasm-game-ai --target web --out-dir web/src/pkg/ --no-pack --release
+          wasm-pack build wasm-game-ai --target web --out-dir ../web/src/pkg/ --no-pack --release
           cd web/
           npm clean-install
           npm run build

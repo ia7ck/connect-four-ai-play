@@ -1,0 +1,39 @@
+# https://github.com/marketplace/actions/cloudflare-pages-github-action
+
+on: [push]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    name: Publish to Cloudflare Pages
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # https://rustwasm.github.io/wasm-pack/installer/
+      - name: Install wasm-pack
+        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+
+      - name: Build
+        run: |
+          rm -rf web/src/pkg/
+          wasm-pack build wasm-game-ai --target web --out-dir web/src/pkg/ --no-pack --release
+          cd web/
+          npm clean-install
+          npm run build
+
+      - name: Publish to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: 19b99e1e62b7e349db7db643bd86ba08
+          projectName: connect-four-ai-play
+          directory: web/dist/
+          # Optional: Enable this if you want to have GitHub Deployments triggered
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          # Optional: Switch what branch you are publishing to.
+          # By default this will be the branch which triggered this workflow
+          branch: main

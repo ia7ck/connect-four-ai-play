@@ -11,14 +11,14 @@ defaults:
     working-directory: wasm-game-ai
 
 jobs:
-  rust-build:
+  build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - name: Build
       run: cargo build
 
-  rust-fmt:
+  fmt:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3

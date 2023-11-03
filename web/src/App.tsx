@@ -191,7 +191,9 @@ function App() {
   return (
     <main>
       <nav className="justify-content-end margin-bottom-0">
-        <a href="https://github.com/ia7ck/connect-four-ai-play" target="blank">GitHub</a>
+        <a href="https://github.com/ia7ck/connect-four-ai-play" target="blank">
+          GitHub
+        </a>
       </nav>
       <h1>Connect 4</h1>
       {data && (

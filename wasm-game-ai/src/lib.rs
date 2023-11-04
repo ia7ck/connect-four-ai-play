@@ -110,11 +110,11 @@ pub fn debug(data: JsValue) -> Result<String, JsValue> {
 #[wasm_bindgen(typescript_custom_section)]
 const TS_APPEND_CONTENT: &'static str = r#"
 
-export type DropPiece = { y: number, x: number };
+export type DropPiece = Readonly<{ y: number, x: number }>;
 export type PiecePutBy = "First" | "Second";
-export type Hand = { kind: "Human", action: DropPiece } | { kind: "Ai" };
+export type Hand = Readonly<{ kind: "Human", action: DropPiece } | { kind: "Ai" }>;
 export type Status = "LastPlayerWin" | "Draw" | "Ongoing";
-export type Data = { h: number, w: number, board: (undefined|PiecePutBy)[][], turn: number, status: Status };
+export type Data = Readonly<{ h: number, w: number, board: (undefined|PiecePutBy)[][], turn: number, status: Status }>;
 export function start(h: number, w: number): Data;
 export function legal_actions(data: Data): DropPiece[];
 export function advance(data: Data, hand: Hand): Data;

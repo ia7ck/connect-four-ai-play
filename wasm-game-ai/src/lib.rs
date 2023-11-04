@@ -17,9 +17,6 @@ macro_rules! log {
     }
 }
 
-const H: usize = 6;
-const W: usize = 7;
-
 #[derive(Serialize, Deserialize)]
 #[serde(tag = "kind", content = "action")]
 enum Hand {
@@ -68,8 +65,8 @@ impl From<Data> for ConnectFourState {
 }
 
 #[wasm_bindgen(skip_typescript)]
-pub fn start() -> Result<JsValue, JsValue> {
-    let game_state = ConnectFourState::new(H, W);
+pub fn start(h: usize, w: usize) -> Result<JsValue, JsValue> {
+    let game_state = ConnectFourState::new(h, w);
     let data = Data::from(game_state);
     Ok(serde_wasm_bindgen::to_value(&data)?)
 }
@@ -118,7 +115,7 @@ export type PiecePutBy = "First" | "Second";
 export type Hand = { kind: "Human", action: DropPiece } | { kind: "Ai" };
 export type Status = "LastPlayerWin" | "Draw" | "Ongoing";
 export type Data = { h: number, w: number, board: (undefined|PiecePutBy)[][], turn: number, status: Status };
-export function start(): Data;
+export function start(h: number, w: number): Data;
 export function legal_actions(data: Data): DropPiece[];
 export function advance(data: Data, hand: Hand): Data;
 export function debug(data: Data): string;

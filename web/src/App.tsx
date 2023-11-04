@@ -14,6 +14,9 @@ const colors = {
   legal: "#efefef",
 } as const;
 
+const boardHeight = 6;
+const boardWidth = 7;
+
 type Board = Data["board"];
 
 function drawGameBoard(ctx: CanvasRenderingContext2D, board: Board) {
@@ -122,7 +125,7 @@ function App() {
   useEffect(() => {
     init()
       .then(() => {
-        setData(start());
+        setData(start(boardHeight, boardWidth));
       })
       .catch((err) => {
         console.error("error;;;", err);
@@ -200,8 +203,8 @@ function App() {
         <>
           <GameInfo data={data}></GameInfo>
           <Canvas
-            height={data.h * 100}
-            width={data.w * 100}
+            height={boardHeight * 100}
+            width={boardWidth * 100}
             onClick={handleClick}
             ref={canvasRef}
           ></Canvas>
